@@ -27,6 +27,10 @@ steps:
 
 # Your build pipeline references a secret variable named ‘access_key’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it secret. See https://go.microsoft.com/fwlink/?linkid=865972
 # Your build pipeline references a secret variable named ‘secret_key’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it secret. See https://go.microsoft.com/fwlink/?linkid=865972
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'aws'
+    command: 'validate'
 - task: TerraformTaskV1@0
   inputs:
     provider: 'aws'
