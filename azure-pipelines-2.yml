@@ -1,0 +1,42 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: 'vs2017-win2016'
+
+variables:
+  region: "us-east-1"
+
+steps:
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: '0.13.5'
+
+- task: TerraformTaskV1@0
+  inputs:
+    provider: 'aws'
+    command: 'init'
+    backendServiceAWS: 'AWS Conexion'
+    backendAWSBucketName: 'skunduterraformremotestate'
+    backendAWSKey: 'tf/AWS--terraform1/terraform.tfstate'
+
+# Your build pipeline references a secret variable named ‘access_key’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it secret. See https://go.microsoft.com/fwlink/?linkid=865972
+# Your build pipeline references a secret variable named ‘secret_key’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it secret. See https://go.microsoft.com/fwlink/?linkid=865972
+- task: TerraformTaskV1@0
+  inputs:
+    provider: 'aws'
+    command: 'plan'
+    commandOptions: '-var "region=$(region)" -out "demo.tfplan"'
+    environmentServiceNameAWS: 'AWS Conexion'
+
+- task: TerraformTaskV1@0
+  inputs:
+    provider: 'aws'
+    command: 'apply'
+    commandOptions: 'demo.tfplan'
+    environmentServiceNameAWS: 'AWS Conexion'
