@@ -35,7 +35,7 @@ steps:
   inputs:
     provider: 'aws'
     command: 'plan'
-    commandOptions: '-var "region=$(region)" -var "access_key=$(access_key)" -var "secret_key=$(secret_key)" - out demo.tfplan"'
+    commandOptions: '-var "region=$(region)" -out "demo.tfplan"'
     environmentServiceNameAWS: 'AWS Conexion'
 
 - task: TerraformTaskV1@0
