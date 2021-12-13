@@ -11,8 +11,7 @@ pool:
 
 variables:
   region: "us-east-1"
-  access_key: "AKIA5SNXY7ZW4ZZJ77W5"
-  secret_key: "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"
+
 
 steps:
 - task: TerraformInstaller@0
